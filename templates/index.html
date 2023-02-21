@@ -1,0 +1,48 @@
+
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>URL Shortener</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="static/img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="static/css/mdb.min.css" />
+  </head>
+
+  {% block content %}
+  <body>
+    <!-- Start your project here-->
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+        <div class="text-center">
+          <h2>Yemi's URL Shortener</h2>
+          {{ wtf.quick_form(form, button_map={"submit": "primary"}) }}
+          <!-- <p class="mb-3">MDB Team</p> -->         
+        </div>
+      </div>
+    </div>
+    <!-- End your project here-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="static/js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+  </body>
+
+  {% endblock %}
+
