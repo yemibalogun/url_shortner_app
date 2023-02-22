@@ -7,6 +7,6 @@
     "start": "set FLASK_APP=main.py && flask run"
   },
   "dependencies": {
-    "flask": "^2.2.3"
+    "flask": "^2.1.0"
   }
 }
