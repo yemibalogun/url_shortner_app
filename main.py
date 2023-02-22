@@ -2,8 +2,8 @@ from flask import Flask, render_template, redirect, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, StringField
-from wtforms.validators import DataRequired
+from wtforms import SubmitField, URLField
+from wtforms.validators import DataRequired, URL
 import random
 import string
 
@@ -22,7 +22,7 @@ class Url(db.Model):
     short_url = db.Column(db.String, nullable=False)
     
 class UrlForm(FlaskForm):
-    website = StringField('Enter Your Website', validators=[DataRequired()], render_kw={"class": "form-control mb-6", "style": "width: 400px; margin: 10px;" })
+    website = URLField('Enter Your Website', validators=[DataRequired(), URL()], render_kw={"class": "form-control mb-6", "style": "width: 400px; margin: 10px;" })
     submit = SubmitField('Shorten URL', render_kw={"class": "btn btn-primary mb-3"})
     
 with app.app_context():
@@ -38,11 +38,29 @@ def generate_code(length=6):
 def home():
     form = UrlForm()
     
+    if form.validate_on_submit():
+        long_url = form.website.data
+        if not long_url.startswith('http'):
+            long_url = 'http://' + long_url
+        url = db.session.query(Url).filter_by(long_url=long_url).first()
+        if url:
+            return render_template('result.html', short_url=url.short_url)
+        else:
+            short_url = generate_code()
+            url = Url(long_url=long_url, short_url=short_url)
+            db.session.add(url)
+            db.session.commit()
+            return render_template(url_for('result', short_url=short_url))
+    
     return render_template('index.html', form=form)
 
-@app.route("/result")
-def result():
-    return render_template('result.html')
+
+@app.route("/result/<short_url>")
+def result(short_url):
+    
+    return render_template('result.html', short_url=short_url)
+
+
 
 
 if __name__=="__main__":

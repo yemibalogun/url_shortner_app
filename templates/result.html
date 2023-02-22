@@ -1,45 +1,38 @@
+{% extends 'base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>URL Shortener</title>
-    <!-- MDB icon -->
-    <link rel="icon" href="static/img/mdb-favicon.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link rel="stylesheet" href="static/css/mdb.min.css" />
-  </head>
+
+
+{% block content %}
+  <script>
+    function copyToClipboard(short_url=short_url) {
+      var text = short_url;
+      navigator.clipboard.writeText(text);
+      alert("Text copied to clipboard!");
+    }
+  </script>
+
   <body>
     <!-- Start your project here-->
     <div class="container">
       <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
         <div class="text-center">
-          <img
-            class="mb-4"
-            src="https://mdbootstrap.com/img/logo/mdb-transparent-250px.png"
-            style="width: 250px; height: 90px"
-          />
+          <h1>SHORT URL</h1>
           <h5 class="mb-3">Thank you for using our product. We're glad you're with us.</h5>
-          <p class="mb-3">MDB Team</p>
-          {{ wtf.quick_form(form) }}
+          <p class="mb-3"> {{ short_url }} </p>
+          
           <a
             class="btn btn-primary btn-lg"
-            href="https://mdbootstrap.com/docs/standard/getting-started/"
+            href="{{ url_for('home') }}"
             target="_blank"
             role="button"
-            >Shorten URL</a
+            >Back</a
+          >
+          <a
+            class="btn btn-primary btn-lg"
+            href="#"
+            target="_blank"
+            role="button" onclick="copyToClipboard(short_url)"
+            >Copy URL</a
           >
         </div>
       </div>
@@ -51,4 +44,6 @@
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
   </body>
-</html>
+
+  {% endblock %}
+
