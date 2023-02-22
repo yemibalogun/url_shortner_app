@@ -44,23 +44,22 @@ def home():
             long_url = 'http://' + long_url
         url = db.session.query(Url).filter_by(long_url=long_url).first()
         if url:
-            print(url.short_url)
+            
             return redirect(url_for('result', short_url=url.short_url) )
         else:
             short_url = generate_code()
             url = Url(long_url=long_url, short_url=short_url)
             db.session.add(url)
             db.session.commit()
-            return redirect(url_for('result', short_url=short_url))
+            return redirect(url_for('result', short_url=url.short_url))
     
     return render_template('index.html', form=form)
 
 
-@app.route("/result/<path:short_url>")
-def result(short_url):
+@app.route("/result")
+def result():
     short_url = request.args.get("short_url")
-        
-    return render_template(url_for('result', short_url=short_url))
+    return render_template('result.html', short_url=short_url)
 
 
 
