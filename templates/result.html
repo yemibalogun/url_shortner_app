@@ -3,43 +3,25 @@
 
 
 {% block content %}
-  <script>
-    function copyToClipboard(short_url=short_url) {
-      var text = short_url;
-      navigator.clipboard.writeText(text);
-      alert("Text copied to clipboard!");
-    }
-  </script>
 
   <body>
     <!-- Start your project here-->
     <div class="container">
-      <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+      <div class="d-flex justify-content-center align-items-center" style="height: 70vh">
         <div class="text-center">
           <h2 style="padding: 1em;">Yemi's URL Shortener</h2>
-          <h5 class="mb-3">Here's your shortened link.</h5>
+          <!-- <h5 class="mb-3">Here's your shortened link.</h5> -->
           <div class="shorturl" style="background-color: aliceblue; box-shadow:
           0 2.8px 2.2px rgba(0, 0, 0, 0.034),
           0 6.7px 5.3px rgba(0, 0, 0, 0.048)
         ;">
-            <p class="mb-3" style="padding: 1em;"> {{ short_url }} </p>
+            
           </div>
-          
-          
+          <p class="mb-1"> Click to copy </p>
           <a
             class="btn btn-primary btn-lg"
-            href="{{ url_for('home') }}"
-            target="_blank"
-            role="button"
-            >Back</a
-          >
-          <a
-            class="btn btn-primary btn-lg"
-            href="{{ url_for('result') }}"
-            target="_blank"
-            role="button" onclick="copyToClipboard(short_url)"
-            >Copy URL</a
-          >
+            href="#"
+            role="button" onclick="copyToClipboard(this.textContent); return false;">{{ short_url }}</a>
         </div>
       </div>
     </div>
@@ -49,6 +31,18 @@
     <script type="text/javascript" src="static/js/mdb.min.js"></script>
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
+
+    <script>
+      function copyToClipboard(text) {
+        var input = document.createElement('textarea');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        alert("Text copied to clipboard!");
+      }
+    </script>
   </body>
 
   {% endblock %}
