@@ -23,13 +23,13 @@ class Url(db.Model):
     
 class UrlForm(FlaskForm):
     website = URLField('Enter Your Website', validators=[DataRequired(), URL()], render_kw={"class": "form-control mb-6", "style": "width: 400px; margin: 10px;" })
-    submit = SubmitField('Shorten URL', render_kw={"class": "btn btn-primary mb-3"})
+    submit = SubmitField('Shorten URL', render_kw={"class": "btn btn-primary mb-4"})
     
 with app.app_context():
     db.create_all()
     
 
-def generate_code(length=6):
+def generate_code(length=8):
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for _ in range(length)) 
 
@@ -44,21 +44,23 @@ def home():
             long_url = 'http://' + long_url
         url = db.session.query(Url).filter_by(long_url=long_url).first()
         if url:
-            return render_template('result.html', short_url=url.short_url)
+            print(url.short_url)
+            return redirect(url_for('result', short_url=url.short_url) )
         else:
             short_url = generate_code()
             url = Url(long_url=long_url, short_url=short_url)
             db.session.add(url)
             db.session.commit()
-            return render_template(url_for('result', short_url=short_url))
+            return redirect(url_for('result', short_url=short_url))
     
     return render_template('index.html', form=form)
 
 
-@app.route("/result/<short_url>")
+@app.route("/result/<path:short_url>")
 def result(short_url):
-    
-    return render_template('result.html', short_url=short_url)
+    short_url = request.args.get("short_url")
+        
+    return render_template(url_for('result', short_url=short_url))
 
 
 

@@ -16,9 +16,15 @@
     <div class="container">
       <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
         <div class="text-center">
-          <h1>SHORT URL</h1>
-          <h5 class="mb-3">Thank you for using our product. We're glad you're with us.</h5>
-          <p class="mb-3"> {{ short_url }} </p>
+          <h2 style="padding: 1em;">Yemi's URL Shortener</h2>
+          <h5 class="mb-3">Here's your shortened link.</h5>
+          <div class="shorturl" style="background-color: aliceblue; box-shadow:
+          0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048)
+        ;">
+            <p class="mb-3" style="padding: 1em;"> {{ short_url }} </p>
+          </div>
+          
           
           <a
             class="btn btn-primary btn-lg"
@@ -29,7 +35,7 @@
           >
           <a
             class="btn btn-primary btn-lg"
-            href="#"
+            href="{{ url_for('result') }}"
             target="_blank"
             role="button" onclick="copyToClipboard(short_url)"
             >Copy URL</a
