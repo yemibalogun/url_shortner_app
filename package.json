@@ -1,3 +1,12 @@
-"scripts": {
-  "start": "set FLASK_APP=your_app_name.py && flask run"
+{
+  "name": "url_shortner_app",
+  "version": "1.0.0",
+  "description": "My First Url Shortner Flask app",
+  "main": "main.py",
+  "scripts": {
+    "start": "set FLASK_APP=main.py && flask run"
+  },
+  "dependencies": {
+    "flask": "2.2.3"
+  }
 }
